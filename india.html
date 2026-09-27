@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>What Do You See Me As?</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 18px;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background:
+        radial-gradient(circle at 10% 20%, #ff9a9e 0%, transparent 30%),
+        radial-gradient(circle at 90% 20%, #fad0c4 0%, transparent 30%),
+        radial-gradient(circle at 50% 100%, #a18cd1 0%, transparent 40%),
+        linear-gradient(135deg, #ff758c, #ff7eb3);
+
+    overflow: hidden;
+}
+
+.card {
+    width: 100%;
+    max-width: 430px;
+
+    padding: 35px 22px 40px;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.97);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 20px 50px rgba(100, 0, 60, 0.25);
+
+    border: 3px solid rgba(255,255,255,0.8);
+}
+
+.emoji {
+    font-size: 65px;
+    margin-bottom: 10px;
+
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+
+}
+
+h1 {
+    margin: 10px 0 30px;
+
+    font-size: clamp(30px, 8vw, 42px);
+    font-weight: 800;
+
+    background: linear-gradient(
+        90deg,
+        #ff416c,
+        #ff4b2b,
+        #9b51e0
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+p {
+    color: #666;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.buttons {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 65px;
+}
+
+button {
+    min-width: 140px;
+
+    padding: 16px 18px;
+
+    border: none;
+    border-radius: 35px;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,0.18);
+}
+
+#friendBtn {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00c6ff,
+            #0072ff
+        );
+}
+
+#futureBtn {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff416c,
+            #ff4b2b
+        );
+
+    position: relative;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.small-text {
+    margin-top: 25px;
+
+    color: #999;
+
+    font-size: 13px;
+}
+
+@media (max-width: 380px) {
+
+    .card {
+        padding: 28px 15px 35px;
+    }
+
+    .emoji {
+        font-size: 55px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    button {
+        min-width: 125px;
+        padding: 14px 10px;
+        font-size: 14px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="card">
+
+    <!-- QUESTION -->
+
+    <div id="question">
+
+        <div class="emoji">
+            👀
+        </div>
+
+        <h1>
+            What do you see me as?
+        </h1>
+
+        <div class="buttons">
+
+            <button
+                id="friendBtn"
+                onclick="friendAnswer()">
+
+                Friend 💙
+
+            </button>
+
+            <button
+                id="futureBtn"
+                onclick="futureAnswer()">
+
+                My Future BF 💍
+
+            </button>
+
+        </div>
+
+        <div class="small-text">
+            choose wisely 👀
+        </div>
+
+    </div>
+
+
+    <!-- FUTURE BF RESULT -->
+
+    <div id="futureResult" class="hidden">
+
+        <div class="emoji">
+            🥹
+        </div>
+
+        <h1>
+            Aww, really gorgeous? 👀
+        </h1>
+
+    </div>
+
+
+    <!-- FRIEND RESULT -->
+
+    <div id="friendResult" class="hidden">
+
+        <div class="emoji">
+            🙂
+        </div>
+
+        <h1>
+            Oh :)
+        </h1>
+
+        <p>
+            Okay, have a nice day!
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let hops = 0;
+
+const futureBtn =
+    document.getElementById("futureBtn");
+
+
+function futureAnswer() {
+
+    hops++;
+
+    /* First hop */
+    if (hops === 1) {
+
+        moveButton();
+
+        return;
+    }
+
+
+    /* Second hop */
+
+    if (hops === 2) {
+
+        moveButton();
+
+        setTimeout(function() {
+
+            document
+                .getElementById("question")
+                .classList.add("hidden");
+
+            document
+                .getElementById("futureResult")
+                .classList.remove("hidden");
+
+        }, 350);
+
+    }
+
+}
+
+
+function moveButton() {
+
+    const padding = 15;
+
+    const buttonWidth =
+        futureBtn.offsetWidth;
+
+    const buttonHeight =
+        futureBtn.offsetHeight;
+
+
+    const maxX =
+        window.innerWidth -
+        buttonWidth -
+        padding;
+
+    const maxY =
+        window.innerHeight -
+        buttonHeight -
+        padding;
+
+
+    const randomX =
+        Math.max(
+            padding,
+            Math.random() * maxX
+        );
+
+    const randomY =
+        Math.max(
+            padding,
+            Math.random() * maxY
+        );
+
+
+    futureBtn.style.position = "fixed";
+
+    futureBtn.style.left =
+        randomX + "px";
+
+    futureBtn.style.top =
+        randomY + "px";
+}
+
+
+function friendAnswer() {
+
+    document
+        .getElementById("question")
+        .classList.add("hidden");
+
+    document
+        .getElementById("friendResult")
+        .classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
